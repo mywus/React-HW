@@ -68,7 +68,7 @@ export const MuiTable = () => {
                             <TableCell>{row.conversion_rate}</TableCell>
                             <TableCell>{row.avg_frequency}</TableCell>
                             <TableCell>{row.avg_time_to_conversion}</TableCell>
-                            <TableCell>{row.id === showActionId ? <Button>Create Customer</Button>  : <img src={"../../public/profiles/"+row.director+".png"}/>}</TableCell>
+                            <TableCell>{row.id === showActionId ? <Button>Create Customer</Button>  : <img width='40px' src={"/profiles/"+row.director+".png"}/>}</TableCell>
 
                            </TableRow> 
                         ))
