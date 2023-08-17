@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
     TablePagination,
     TableContainer,
@@ -26,6 +27,8 @@ interface Data {
 
 
 export const MuiTable = () => {
+    const [showActionId, setShowActionId] = useState(-1);
+
     return (
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 750 }} aria-label='simple table'>
@@ -47,8 +50,13 @@ export const MuiTable = () => {
                     {
                         rows.map((row) => (
                            <TableRow
+                           hover
                            key={row.id}
                            sx={{ '&:last-child td, &:last-child th' : { border: 0 } }}
+                           onMouseEnter={() => {
+                            setShowActionId(row.id);
+                          }}
+                          onMouseLeave={() => setShowActionId(-1)}
                            >
                             <TableCell>{row.start_date}</TableCell>
                             <TableCell>{row.end_date}</TableCell>
@@ -59,7 +67,7 @@ export const MuiTable = () => {
                             <TableCell>{row.conversion_rate}</TableCell>
                             <TableCell>{row.avg_frequency}</TableCell>
                             <TableCell>{row.avg_time_to_conversion}</TableCell>
-                            <TableCell><Button>Create Customer</Button> </TableCell>
+                            <TableCell>{row.id === showActionId ? <Button>Create Customer</Button>  : ""}</TableCell>
 
                            </TableRow> 
                         ))
