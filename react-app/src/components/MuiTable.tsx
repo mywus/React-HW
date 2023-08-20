@@ -59,7 +59,7 @@ export const MuiTable = () => {
                           }}
                           onMouseLeave={() => setShowActionId(-1)}
                            >
-                            <TableCell>{row.start_date}</TableCell>
+                            <TableCell >{row.start_date}</TableCell>
                             <TableCell>{row.end_date}</TableCell>
                             <TableCell>{row.customer}</TableCell>
                             <TableCell>{row.impresssion}</TableCell>
@@ -67,9 +67,8 @@ export const MuiTable = () => {
                             <TableCell>{row.attribute_matches}</TableCell>
                             <TableCell>{row.conversion_rate}</TableCell>
                             <TableCell>{row.avg_frequency}</TableCell>
-                            <TableCell>{row.avg_time_to_conversion}</TableCell>
-                            <TableCell>{row.id === showActionId ? <Button>Create Customer</Button>  : <img width='40px' src={"/profiles/"+row.director+".png"}/>}</TableCell>
-
+                            <TableCell>{row.avg_time_to_conversion} Days</TableCell>
+                            <TableCell width="13%">{row.id === showActionId ? <Button sx={{height: 45}}><p>+ Create Customer</p></Button>  : <img width='40px' src={"/profiles/" + row.director + ".png"}/>}</TableCell>
                            </TableRow> 
                         ))
                     }                    
