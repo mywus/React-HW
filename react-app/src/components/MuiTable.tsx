@@ -15,27 +15,16 @@ import {
     Button,
     Box,
     SwipeableDrawer,
+    Card,
+    CardContent,
     List,
-    ListItem,
-    ListItemIcon,
-    ListItemButton,
-    ListItemText
+    ToggleButton,
+    ToggleButtonGroup,
+    createTheme,
+    alpha,
+    getContrastRatio,
+    ThemeProvider
 } from '@mui/material'
-
-interface Data {
-    startDate: string;
-    endDate: string;
-    customer: string;
-    impression: number;
-    conversion: number;
-    attributeMatches: number;
-    conversionRate: number;
-    avgFrequency: number;
-    avgTimeToConversion: number;
-    director: string;
-  }
-
-
 
 export const MuiTable = () => {
     const [rowId, setRowId] = useState(-1);
@@ -47,11 +36,30 @@ export const MuiTable = () => {
         setCurrentlyOpenedRow(rowId)
         setIsSidebarOpen(true)
     }
+    const [alignment, setAlignment] = React.useState('web');
 
+  const handleChange = (
+    event: React.MouseEvent<HTMLElement>,
+    mainFilter: string) => {
+    setMainFilter(mainFilter);
+  };
 
     return (
+        <Card>
+        <CardContent> 
+        <ToggleButtonGroup
+        color="primary"
+        value={mainFilter}
+        exclusive
+        onChange={handleChange}
+        aria-label="Platform"
+        >
+        <ToggleButton fullWidth value="All">All</ToggleButton>
+        <ToggleButton fullWidth value="Favorites">Favorites</ToggleButton>
+        </ToggleButtonGroup>
+        </CardContent>
         <TableContainer component={Paper}>
-            <SwipeableDrawer transitionDuration={500} anchor="right" open={isSidebarOpened} onClose={() => setIsSidebarOpen(false)} onOpen={() => setIsSidebarOpen(true)}>
+            <SwipeableDrawer transitionDuration={500} anchor="right" open={isSidebarOpened} onClose={() => setIsSidebarOpen(false)} onOpen={() => setIsSidebarOpen(true)}>            
             <Box
             sx={{ width : 500, borderRadius : '70px' }}
             >
@@ -60,7 +68,7 @@ export const MuiTable = () => {
             </List>
             </Box>
             </SwipeableDrawer>
-            <Table sx={{ minWidth: 750 }} aria-label='simple table'>
+            <Table sx={{ minWidth: 750, borderTop: `${"#000000"+'22'} 1px solid`}} aria-label='data table'>
                 <TableHead>  
                     <TableRow>
                         <TableCell>Start Date</TableCell>
@@ -82,7 +90,6 @@ export const MuiTable = () => {
                            (mainFilter ===  "All" || row.favorite) && <TableRow
                            hover
                            key={row.id}
-                           sx={{ '&:last-child td, &:last-child th' : { border: 0 } }}
                            onMouseEnter={() => {
                             setRowId(row.id);
                           }}
@@ -97,13 +104,15 @@ export const MuiTable = () => {
                             <TableCell>{row.conversion_rate}</TableCell>
                             <TableCell>{row.avg_frequency}</TableCell>
                             <TableCell>{row.avg_time_to_conversion} Days</TableCell>
-                            <TableCell width="13%">{row.id === rowId ? <Button onClick={ () => handleOpenSidebar(rowId)} sx={{height: 45}}><p>+ Create Customer</p></Button>  : <img width='40px' src={"/profiles/" + row.director + ".png"}/>}</TableCell>
+                            <TableCell width="13%">{row.id === rowId ? <Button onClick={ () => handleOpenSidebar(rowId)} sx={{height: 45}}><p>+ Create Customer</p></Button>  : <img width='39px' src={"/profiles/" + row.director + ".png"}/>}</TableCell>
                            </TableRow> 
                         ))
                     }                    
                 </TableBody>
             </Table>
-        </TableContainer>        
+        </TableContainer>   
+        </Card>
+
     )
 }
 
