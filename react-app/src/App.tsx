@@ -1,11 +1,10 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { MuiTable } from './components/MuiTable';
+import { MuiTable } from './components/muiTable';
 
 function App() {
   return (
       <MuiTable />
+
   );
 }
 

@@ -1,10 +1,12 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { FormSideBar } from './formSideBar'
+import {SwipeableDrawer, Box, List} from '@mui/material'
+import { setIsSideBarOpened } from '../redux/slices/sideBarSlice'
+import { RootState } from './types'; // Adjust the path to your types file
+import { useSelector, useDispatch } from 'react-redux'
 
-import MailIcon from "@mui/icons-material/Mail";
-import WebIcon from "@mui/icons-material/Web";
 
 import {
-    TablePagination,
     TableContainer,
     Table,
     TableHead,
@@ -13,28 +15,25 @@ import {
     TableCell,
     Paper,
     Button,
-    Box,
-    SwipeableDrawer,
     Card,
     CardContent,
-    List,
     ToggleButton,
     ToggleButtonGroup,
-    createTheme,
-    alpha,
-    getContrastRatio,
-    ThemeProvider
+
 } from '@mui/material'
 
 export const MuiTable = () => {
+    const dispatch = useDispatch();
+    const isSidebarOpened = useSelector(
+        (state: RootState) => state.SideBarOpened.open
+        );
     const [rowId, setRowId] = useState(-1);
-    const [isSidebarOpened, setIsSidebarOpen] = useState(false);
     const [currentlyOpenedRow, setCurrentlyOpenedRow ] = useState(-1);
     const [mainFilter, setMainFilter] = useState("All");
 
     const handleOpenSidebar = (rowId : number) => {
         setCurrentlyOpenedRow(rowId)
-        setIsSidebarOpen(true)
+        dispatch(setIsSideBarOpened(true))
     }
     const [alignment, setAlignment] = React.useState('web');
 
@@ -59,15 +58,7 @@ export const MuiTable = () => {
         </ToggleButtonGroup>
         </CardContent>
         <TableContainer component={Paper}>
-            <SwipeableDrawer transitionDuration={500} anchor="right" open={isSidebarOpened} onClose={() => setIsSidebarOpen(false)} onOpen={() => setIsSidebarOpen(true)}>            
-            <Box
-            sx={{ width : 500, borderRadius : '70px' }}
-            >
-            <List>
-                {`ID: ${currentlyOpenedRow}`}
-            </List>
-            </Box>
-            </SwipeableDrawer>
+            <FormSideBar></FormSideBar>
             <Table sx={{ minWidth: 750, borderTop: `${"#000000"+'22'} 1px solid`}} aria-label='data table'>
                 <TableHead>  
                     <TableRow>
